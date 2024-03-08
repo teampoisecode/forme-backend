@@ -13,4 +13,6 @@ router.post(
   EHW(miscController.uploadImage)
 );
 
+router.get("/images/:fileName", EHW(miscController.getFile));
+
 module.exports = router;

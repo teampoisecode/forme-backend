@@ -18,7 +18,14 @@ env = module.exports = process.env;
 require("./db/conn");
 
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: env.FRONTEND_BASE_URL }));
+app.use(
+  cors({
+    origin: "*",
+    methods: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // Logger
 logger = (req, res, next) => {

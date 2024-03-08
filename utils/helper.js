@@ -3,6 +3,9 @@ const { PASSWORD_KEYS } = require("./constants");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const path = require("path");
+const FileManager = require("./fileManager");
+
+const fileManager = new FileManager();
 
 module.exports = {
   generatePassword: async (password) => {
@@ -83,14 +86,10 @@ module.exports = {
     return designId;
   },
 
-  deleteFileFromStorage: (url) => {
+  deleteFileFromStorage: async (url) => {
     if (url) {
-      const fileName = url.split("/").pop();
-      const filePath = path.join(customImagesDirPath, fileName);
-      if (fs.existsSync(filePath)) {
-        fs.rmSync(filePath);
-        return true;
-      }
+      await fileManager.deleteFile(url);
+      return true;
     }
     return false;
   },
