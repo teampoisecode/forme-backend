@@ -37,7 +37,7 @@ class FileManager {
         console.info(err, data);
       });
     } catch (e) {
-      console.err("Error uploading file" + e.message);
+      console.error("Error uploading file" + e.message);
     }
   }
 
@@ -60,7 +60,7 @@ class FileManager {
     return new Promise((resolve, reject) => {
       this.s3.getObject(params, (err, data) => {
         if (err) {
-          console.err(err, err.stack);
+          console.error(err, err.stack);
           reject(err);
         } else {
           resolve(data);
