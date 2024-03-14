@@ -62,36 +62,60 @@ const orderSchema = new mongoose.Schema(
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
       pre_polish: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
       setting: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
       final_polish: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
       qc: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
       repair: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
         in_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
+        complete_date: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
       },
     },
     changing: [
