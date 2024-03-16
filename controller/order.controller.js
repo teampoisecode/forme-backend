@@ -148,4 +148,50 @@ module.exports = {
       MODULE_DELETED("Order")
     );
   },
+
+  getLossData: async (req, res) => {
+    const { search, dept, month } = req.query;
+
+    let query = {};
+    if (search) {
+      query["$or"] = [
+        {
+          "job_sheet.customer_name.value": {
+            $regex: `^${search}`,
+            $options: "i",
+          },
+        },
+        { order_id: { $regex: `^${search}` } },
+      ];
+    }
+
+    const department = `metal.${dept}`;
+    const completeDate = `${department}.complete_date.value`;
+    const stateDate = new Date(month);
+    const endDate = new Date(month);
+    endDate.setMonth(endDate.getMonth() + 1);
+    query[completeDate] = { $gte: stateDate, $lt: endDate };
+
+    let data = await Order.find(
+      query,
+      `order_id job_sheet.customer_name.value ${department}`,
+      { [completeDate]: 1 }
+    );
+    return helpers.createResponse(
+      res,
+      constants.SUCCESS,
+      MODULE_FOUND("Order"),
+      data.map((d) => ({
+        order_id: d.order_id,
+        customer_name: d.job_sheet.customer_name.value,
+        pcs: d.metal[dept].pcs.value,
+        in_wt: d.metal[dept].in_wt.value,
+        out_wt: d.metal[dept].out_wt.value,
+        dust_wt: d.metal[dept].dust_wt.value,
+        complete_date: d.metal[dept].complete_date.value
+          .toISOString()
+          .split("T")[0],
+      }))
+    );
+  },
 };

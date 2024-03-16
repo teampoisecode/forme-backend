@@ -76,11 +76,13 @@ const customerRouter = require("./routes/customer.route");
 const miscRouter = require("./routes/misc.route");
 const designRouter = require("./routes/design.route");
 const orderRouter = require("./routes/order.route");
+const lossRouter = require("./routes/loss.route");
 app.use(API_VERSION + "users", userRouter);
 app.use(API_VERSION + "customers", customerRouter);
 app.use(API_VERSION + "misc", miscRouter);
 app.use(API_VERSION + "designs", designRouter);
 app.use(API_VERSION + "orders", orderRouter);
+app.use(API_VERSION + "losses", lossRouter);
 
 // 404 Not found routes
 app.use((req, res) => {

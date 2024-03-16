@@ -17,5 +17,7 @@ router.delete(
   EHW(authRequired),
   EHW(orderController.removeOrder)
 );
+router.get("/loss", EHW(authRequired), EHW(orderController.getLossData));
+
 
 module.exports = router;
