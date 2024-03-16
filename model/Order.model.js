@@ -63,7 +63,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
@@ -73,7 +73,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
@@ -83,7 +83,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
@@ -93,7 +93,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
@@ -103,7 +103,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
@@ -113,7 +113,7 @@ const orderSchema = new mongoose.Schema(
         out_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         dust_wt: { value: { type: String }, is_admin_edit: { type: Boolean } },
         complete_date: {
-          value: { type: String },
+          value: { type: Date },
           is_admin_edit: { type: Boolean },
         },
       },
