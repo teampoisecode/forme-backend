@@ -7,6 +7,9 @@ const orderSchema = new mongoose.Schema(
     order_id: {
       type: String,
     },
+    gross_weight: {
+      type: String,
+    },
     order_status: {
       type: String,
     },
