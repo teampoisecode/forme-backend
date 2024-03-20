@@ -48,17 +48,6 @@ const orderSchema = new mongoose.Schema(
         is_admin_edit: { type: Boolean },
       },
     },
-    diamond: [
-      {
-        size: { value: { type: String }, is_admin_edit: { type: Boolean } },
-        pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
-        pointer: { value: { type: String }, is_admin_edit: { type: Boolean } },
-        total_weight: {
-          value: { type: String },
-          is_admin_edit: { type: Boolean },
-        },
-      },
-    ],
     metal: {
       filling: {
         pcs: { value: { type: String }, is_admin_edit: { type: Boolean } },
