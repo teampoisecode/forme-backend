@@ -150,7 +150,7 @@ module.exports = {
   },
 
   getLossData: async (req, res) => {
-    const { search, dept, month } = req.query;
+    const { search, dept, month, kt } = req.query;
 
     let query = {};
     if (search) {
@@ -171,6 +171,8 @@ module.exports = {
     const endDate = new Date(month);
     endDate.setMonth(endDate.getMonth() + 1);
     query[completeDate] = { $gte: stateDate, $lt: endDate };
+
+    query["job_sheet.kt.value"] = kt;
 
     let data = await Order.find(
       query,

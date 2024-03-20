@@ -20,9 +20,9 @@ module.exports = {
   },
 
   updateLossData: async (req, res) => {
-    const { dept, month, value } = req.body;
+    const { dept, month, kt, value } = req.body;
 
-    await Loss.updateMany({}, { $set: { [`${dept}.${month}`]: value } });
+    await Loss.updateMany({}, { $set: { [`${dept}.${month}.${kt}`]: value } });
 
     return helpers.createResponse(
       res,
