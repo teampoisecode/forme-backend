@@ -31,6 +31,14 @@ const designSchema = new mongoose.Schema(
       value: { type: String },
       is_admin_edit: { type: Boolean },
     },
+    product_type: {
+      value: { type: String },
+      is_admin_edit: { type: Boolean },
+    },
+    product_size: {
+      value: { type: String },
+      is_admin_edit: { type: Boolean },
+    },
     cts: {
       value: { type: String },
       is_admin_edit: { type: Boolean },
