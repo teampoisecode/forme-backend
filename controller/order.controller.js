@@ -12,7 +12,8 @@ const {
 
 module.exports = {
   getAllOrders: async (req, res) => {
-    const { search, start_date, end_date, metal, kt, rhodium } = req.query;
+    const { search, start_date, end_date, metal, kt, rhodium, order_status } =
+      req.query;
 
     let query = {};
     if (search) {
@@ -50,6 +51,10 @@ module.exports = {
 
     if (rhodium) {
       query["job_sheet.rhodium.value"] = rhodium;
+    }
+
+    if (order_status) {
+      query["order_status"] = order_status;
     }
 
     let data = await Order.find(query, null, {
