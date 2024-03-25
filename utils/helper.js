@@ -81,6 +81,7 @@ module.exports = {
     let designId;
     while (!found) {
       designId = String(Math.round(Math.random() * 100000000));
+      designId = designId.padEnd(8, "0");
       found = !usedId.includes(designId);
     }
     return designId;
