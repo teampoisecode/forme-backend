@@ -69,7 +69,7 @@ module.exports = {
         return helpers.createResponse(
           res,
           constants.SERVER_ERROR,
-          messages.SERVER_ERROR
+          messages.SERVER_ERROR,
         );
       }
     };
@@ -87,10 +87,15 @@ module.exports = {
     return designId;
   },
 
-  deleteFileFromStorage: async (url) => {
-    if (url) {
-      await fileManager.deleteFile(url);
-      return true;
+  deleteFileFromStorage: async (key) => {
+    if (key) {
+      try {
+        await fileManager.deleteFile(key);
+        return true;
+      } catch (err) {
+        console.error("Error deleting file from storage:", err.message);
+        return false;
+      }
     }
     return false;
   },

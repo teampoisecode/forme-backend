@@ -1,97 +1,97 @@
-const env = process.env;
-const AWS = require("aws-sdk");
+const fs = require("fs");
+const path = require("path");
 
-const AWS_ACCESS_KEY_ID = env.AWS_ACCESS_KEY_ID;
-const AWS_SECRET_ACCESS_KEY = env.AWS_SECRET_ACCESS_KEY;
-const AWS_S3_BUCKET_NAME = env.AWS_S3_BUCKET_NAME;
-const AWS_S3_REGION = env.AWS_S3_REGION;
-const AWS_FOLDER = env.AWS_FOLDER;
-
-let s3config = {
-  region: AWS_S3_REGION,
-};
-
-if (AWS_ACCESS_KEY_ID) {
-  s3config = {
-    ...s3config,
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-  };
-}
+const BASE_DIR = path.resolve(__dirname, ".." + env.LOCAL_FOLDER);
 
 class FileManager {
-  s3;
+	constructor() {
+		// Ensure the base directory exists
+		if (!fs.existsSync(BASE_DIR)) {
+			fs.mkdirSync(BASE_DIR, { recursive: true });
+		}
+	}
 
-  constructor() {
-    this.s3 = new AWS.S3(s3config);
-  }
+	async uploadFile(key, fileData) {
+		try {
+			const filePath = path.join(BASE_DIR, key);
+			const dir = path.dirname(filePath);
 
-  async uploadFile(key, fileData) {
-    try {
-      const params = {
-        Bucket: AWS_S3_BUCKET_NAME,
-        Key: `${AWS_FOLDER}/${key}`,
-        Body: fileData,
-      };
-      this.s3.upload(params, function (err, data) {
-        console.info(err, data);
-      });
-    } catch (e) {
-      console.error("Error uploading file" + e.message);
-    }
-  }
+			// Ensure the target directory exists
+			if (!fs.existsSync(dir)) {
+				fs.mkdirSync(dir, { recursive: true });
+			}
 
-  deleteFile(key) {
-    const params = {
-      Bucket: AWS_S3_BUCKET_NAME,
-      Key: key,
-    };
-    return this.s3.deleteObject(params);
-  }
+			// Write the file data to the target path
+			fs.writeFileSync(filePath, fileData);
+			console.log(`File uploaded successfully to: ${filePath}`);
+		} catch (e) {
+			console.error("Error uploading file: " + e.message);
+		}
+	}
 
-  async getFileByKey(key, contentDisposition, contentType) {
-    const params = {
-      Bucket: AWS_S3_BUCKET_NAME,
-      Key: key,
-      ResponseContentDisposition: contentDisposition,
-      ResponseContentType: contentType,
-    };
+	deleteFile(key) {
+		try {
+			const filePath = path.join(BASE_DIR, key);
 
-    return new Promise((resolve, reject) => {
-      this.s3.getObject(params, (err, data) => {
-        if (err) {
-          console.error(err, err.stack);
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
-  }
+			// Check if the file exists before attempting to delete
+			if (fs.existsSync(filePath)) {
+				fs.unlinkSync(filePath);
+				console.log(`File deleted successfully: ${filePath}`);
+			} else {
+				console.warn(`File not found for deletion: ${filePath}`);
+			}
+		} catch (e) {
+			console.error("Error deleting file: " + e.message);
+		}
+	}
 
-  generatePresignedUrl(
-    fileKey,
-    contentDisposition,
-    contentType,
-    expiryTime = 3600
-  ) {
-    const params = {
-      Bucket: AWS_S3_BUCKET_NAME,
-      Key: fileKey,
-      Expires: expiryTime,
-      ResponseContentDisposition: contentDisposition,
-      ResponseContentType: contentType,
-    };
-    return this.s3.getSignedUrl("getObject", params);
-  }
+	async getFileByKey(key, contentDisposition, contentType) {
+		try {
+			const filePath = path.join(BASE_DIR, key);
 
-  streamToString = (stream) =>
-    new Promise((resolve, reject) => {
-      const chunks = [];
-      stream.on("data", (chunk) => chunks.push(chunk));
-      stream.on("error", reject);
-      stream.on("end", () => resolve(Buffer.concat(chunks)));
-    });
+			if (fs.existsSync(filePath)) {
+				const fileData = fs.readFileSync(filePath);
+
+				// Mimicking the behavior of `getObject` for consistency
+				return {
+					Body: fileData,
+					ContentLength: fileData.length,
+					ContentType: contentType,
+					ContentDisposition: contentDisposition,
+				};
+			} else {
+				throw new Error("File not found");
+			}
+		} catch (e) {
+			console.error("Error retrieving file: " + e.message);
+			throw e;
+		}
+	}
+
+	generatePresignedUrl(fileKey) {
+		try {
+			const filePath = path.join(BASE_DIR, fileKey);
+
+			if (fs.existsSync(filePath)) {
+				// Return a local file path as a "presigned URL" for local use
+				return filePath;
+			} else {
+				throw new Error("File not found");
+			}
+		} catch (e) {
+			console.error("Error generating presigned URL: " + e.message);
+			throw e;
+		}
+	}
+
+	streamToString(stream) {
+		return new Promise((resolve, reject) => {
+			const chunks = [];
+			stream.on("data", (chunk) => chunks.push(chunk));
+			stream.on("error", reject);
+			stream.on("end", () => resolve(Buffer.concat(chunks)));
+		});
+	}
 }
 
 module.exports = FileManager;

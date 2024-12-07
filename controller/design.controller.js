@@ -53,14 +53,18 @@ module.exports = {
       }
     }
 
+		console.log(query);
+
     let data = await Design.find(query, null, {
       sort: { design_id: 1 },
     });
+		console.log(data);
+
     return helpers.createResponse(
       res,
       constants.SUCCESS,
       MODULE_FOUND("Design"),
-      data
+      data,
     );
   },
 
@@ -78,7 +82,7 @@ module.exports = {
       res,
       constants.CREATED,
       MODULE_CREATED("Design"),
-      design
+      design,
     );
   },
 
@@ -86,13 +90,13 @@ module.exports = {
     const design = await Design.findByIdAndUpdate(
       req.params._id,
       { ...req.body },
-      { new: true }
+      { new: true },
     );
     if (!design) {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("Design")
+        MODULE_NOT_FOUND("Design"),
       );
     }
 
@@ -100,7 +104,7 @@ module.exports = {
       res,
       constants.SUCCESS,
       MODULE_UPDATED("Design"),
-      design
+      design,
     );
   },
 
@@ -112,19 +116,21 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("Design")
+        MODULE_NOT_FOUND("Design"),
       );
     }
 
-    deleteFileFromStorage(design.ref_image.url);
-    deleteFileFromStorage(design.cad_image.url);
-    deleteFileFromStorage(design.final_image.url);
+    // Ensure the correct file paths are passed to deleteFileFromStorage
+    if (design.ref_image?.url) deleteFileFromStorage(design.ref_image.url);
+    if (design.cad_image?.url) deleteFileFromStorage(design.cad_image.url);
+    if (design.final_image?.url) deleteFileFromStorage(design.final_image.url);
+
     await design.delete();
 
     return helpers.createResponse(
       res,
       constants.SUCCESS,
-      MODULE_DELETED("Design")
+      MODULE_DELETED("Design"),
     );
   },
 };
