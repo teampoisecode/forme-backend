@@ -30,7 +30,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.SUCCESS,
-        "Admin is already created!"
+        "Admin is already created!",
       );
     }
 
@@ -46,7 +46,7 @@ module.exports = {
     return helpers.createResponse(
       res,
       constants.CREATED,
-      MODULE_CREATED("Admin")
+      MODULE_CREATED("Admin"),
     );
   },
 
@@ -58,7 +58,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.BAD_REQUEST,
-        INVALID_LOGIN_CREDENTIALS
+        INVALID_LOGIN_CREDENTIALS,
       );
     }
 
@@ -67,7 +67,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.BAD_REQUEST,
-        INVALID_LOGIN_CREDENTIALS
+        INVALID_LOGIN_CREDENTIALS,
       );
     }
 
@@ -84,7 +84,7 @@ module.exports = {
         is_admin: user.is_admin,
         is_password_reset: user.is_password_reset,
         accessToken,
-      }
+      },
     );
   },
 
@@ -98,7 +98,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.BAD_REQUEST,
-        "User with same email is already exist!"
+        "User with same email is already exist!",
       );
     }
 
@@ -118,7 +118,7 @@ module.exports = {
         mobile_no: user.mobile_no,
         password,
         password_reset_url: resetURL,
-      }
+      },
     );
   },
 
@@ -131,7 +131,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("User")
+        MODULE_NOT_FOUND("User"),
       );
     }
 
@@ -140,7 +140,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.BAD_REQUEST,
-        "User with same email is already exist!"
+        "User with same email is already exist!",
       );
     }
 
@@ -153,7 +153,7 @@ module.exports = {
       user["password"] = passObj.hash;
       user["is_password_reset"] = true;
       const token = generateToken({ uuid: _id }, true, true);
-      resetURL = `${env.RESET_PASSWORD_URL}/${token}`;
+      resetURL = `${env.FRONTEND_BASE_URL}/reset-password/${token}`;
     }
     await user.save();
 
@@ -168,7 +168,7 @@ module.exports = {
         ...(passObj
           ? { password: passObj.password, password_reset_url: resetURL }
           : {}),
-      }
+      },
     );
   },
 
@@ -183,13 +183,13 @@ module.exports = {
         password: passObj.hash,
         is_password_reset: false,
       },
-      { new: true }
+      { new: true },
     );
     if (!user) {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("User")
+        MODULE_NOT_FOUND("User"),
       );
     }
 
@@ -204,7 +204,7 @@ module.exports = {
         mobile_no: user.mobile_no,
         is_admin: user.is_admin,
         is_password_reset: user.is_password_reset,
-      }
+      },
     );
   },
 
@@ -227,7 +227,7 @@ module.exports = {
       res,
       constants.SUCCESS,
       MODULE_FOUND("User"),
-      data
+      data,
     );
   },
 
@@ -239,7 +239,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("User")
+        MODULE_NOT_FOUND("User"),
       );
     }
 
@@ -248,7 +248,7 @@ module.exports = {
     return helpers.createResponse(
       res,
       constants.SUCCESS,
-      MODULE_DELETED("User")
+      MODULE_DELETED("User"),
     );
   },
 
@@ -263,7 +263,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("User")
+        MODULE_NOT_FOUND("User"),
       );
     }
 

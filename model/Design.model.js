@@ -57,8 +57,24 @@ const designSchema = new mongoose.Schema(
         weight: { value: { type: String }, is_admin_edit: { type: Boolean } },
       },
     ],
+    diamond_details: [
+      {
+        diamond_weight: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
+        price_per_carat: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
+        total_carat_price: {
+          value: { type: String },
+          is_admin_edit: { type: Boolean },
+        },
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = new mongoose.model("Design", designSchema);

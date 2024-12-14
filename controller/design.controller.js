@@ -53,12 +53,9 @@ module.exports = {
       }
     }
 
-		console.log(query);
-
     let data = await Design.find(query, null, {
       sort: { design_id: 1 },
     });
-		console.log(data);
 
     return helpers.createResponse(
       res,

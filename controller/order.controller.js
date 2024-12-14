@@ -64,7 +64,7 @@ module.exports = {
       res,
       constants.SUCCESS,
       MODULE_FOUND("Order"),
-      data
+      data,
     );
   },
 
@@ -82,7 +82,7 @@ module.exports = {
       res,
       constants.CREATED,
       MODULE_CREATED("Order"),
-      order
+      order,
     );
   },
 
@@ -90,13 +90,13 @@ module.exports = {
     const order = await Order.findByIdAndUpdate(
       req.params._id,
       { ...req.body },
-      { new: true }
+      { new: true },
     );
     if (!order) {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("Order")
+        MODULE_NOT_FOUND("Order"),
       );
     }
 
@@ -104,7 +104,7 @@ module.exports = {
       res,
       constants.SUCCESS,
       MODULE_UPDATED("Order"),
-      order
+      order,
     );
   },
 
@@ -115,13 +115,13 @@ module.exports = {
     const order = await Order.updateMany(
       { _id: { $in: idList } },
       { ...req.body },
-      { new: true }
+      { new: true },
     );
     if (!order) {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("Order")
+        MODULE_NOT_FOUND("Order"),
       );
     }
 
@@ -129,7 +129,7 @@ module.exports = {
       res,
       constants.SUCCESS,
       MODULE_UPDATED("Order"),
-      order
+      order,
     );
   },
 
@@ -141,7 +141,7 @@ module.exports = {
       return helpers.createResponse(
         res,
         constants.NOT_FOUND,
-        MODULE_NOT_FOUND("Order")
+        MODULE_NOT_FOUND("Order"),
       );
     }
 
@@ -150,7 +150,7 @@ module.exports = {
     return helpers.createResponse(
       res,
       constants.SUCCESS,
-      MODULE_DELETED("Order")
+      MODULE_DELETED("Order"),
     );
   },
 
@@ -182,7 +182,7 @@ module.exports = {
     let data = await Order.find(
       query,
       `order_id job_sheet.customer_name.value ${department}`,
-      { [completeDate]: 1 }
+      { [completeDate]: 1 },
     );
     return helpers.createResponse(
       res,
@@ -198,7 +198,7 @@ module.exports = {
         complete_date: d.metal[dept].complete_date.value
           .toISOString()
           .split("T")[0],
-      }))
+      })),
     );
   },
 };

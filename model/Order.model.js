@@ -44,6 +44,10 @@ const orderSchema = new mongoose.Schema(
         value: { type: String },
         is_admin_edit: { type: Boolean },
       },
+      rate: {
+        value: { type: String },
+        is_admin_edit: { type: Boolean },
+      },
     },
     metal: {
       filling: {
@@ -124,7 +128,7 @@ const orderSchema = new mongoose.Schema(
       solder: { value: { type: String }, is_admin_edit: { type: Boolean } },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = new mongoose.model("Order", orderSchema);
